@@ -1,5 +1,11 @@
 // Copyright (c) 2025 Elric Neumann. All rights reserved. MIT license.
 
+export type ComponentCallback = (args: {
+  host: HTMLElement;
+  mount: (cb: () => void) => void;
+  unmount: (cb: () => void) => void;
+}) => void;
+
 export class Query {
   elements: Element[] = [];
   length: number = 0;
@@ -299,8 +305,42 @@ export class Query {
 
     return new Query(siblings);
   }
+
+  define(name: string, callback: ComponentCallback) {
+    class Component extends HTMLElement {
+      private _mountCallbacks: (() => void)[] = [];
+      private _unmountCallbacks: (() => void)[] = [];
+
+      constructor() {
+        super();
+        callback({
+          host: this,
+          mount: (cb) => this._mountCallbacks.push(cb),
+          unmount: (cb) => this._unmountCallbacks.push(cb),
+        });
+      }
+
+      connectedCallback() {
+        for (let i = 0, len = this._mountCallbacks.length; i < len; i++) {
+          this._mountCallbacks[i]();
+        }
+      }
+
+      disconnectedCallback() {
+        for (let i = 0, len = this._unmountCallbacks.length; i < len; i++) {
+          this._unmountCallbacks[i]();
+        }
+      }
+    }
+
+    customElements.define("q-" + name, Component);
+  }
 }
 
 export function _(selector: string | Element | Element[] | Query | null): Query {
   return new Query(selector);
 }
+
+_.define = (name: string, callback: ComponentCallback) => {
+  return new Query(null).define(name, callback);
+};

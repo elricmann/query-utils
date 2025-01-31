@@ -90,4 +90,15 @@ const computed = new ComputedRef(count, () => count.get() * 2);
 count.track(() => _(".count").text(count.get() as unknown as string));
 computed.track(() => _(".computed").text(computed.get() as unknown as string));
 
-setInterval(() => count.set(count.get() + 1), 1000);
+setInterval(() => count.set(count.get() + 1), 2000);
+
+_.define("sidebar", ({ host, mount, unmount }) => {
+  mount(() => {
+    console.log("Mounted sidebar", host);
+    _(host).html("This is the sidebar");
+  });
+
+  unmount(() => {
+    console.log("unmounted sidebar");
+  });
+});
