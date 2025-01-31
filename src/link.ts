@@ -17,6 +17,7 @@ _.define("link", ({ host, mount }) => {
 
       history.pushState({}, "", href);
       window.dispatchEvent(new PopStateEvent("popstate"));
+      window.dispatchEvent(new CustomEvent("routechange", { detail: { path: href } }));
     });
   });
 });

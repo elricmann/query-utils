@@ -1,6 +1,9 @@
-<script>
-  // this needs to work as an ES module, detach script and append
-  console.log("Loaded partial.html");
+<script type="module">
+  import { _ } from "../src";
+
+  _("div > strong").css("color", "magenta");
+
+  console.log("Loaded partial.html", _);
 </script>
 
 <section>
