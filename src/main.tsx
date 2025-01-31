@@ -1,4 +1,4 @@
-import { _ } from "./";
+import { ComputedRef, Ref, _ } from "./";
 
 _('.selected').css('background-color', 'yellow');
 
@@ -17,13 +17,13 @@ _('#toggle').on('click', (e: Event) => {
   _('.container').toggleClass('highlighted');
 });
 
-_('.input-field')
-  .attr('placeholder', 'Type something...')
-  .val('New value')
-  .on('input', (e: Event) => {
-    const value = _(e.target as Element).val() as string;
-    _('.text').text(`You typed: ${value}`);
-  });
+// _('.input-field')
+//   .attr('placeholder', 'Type something...')
+//   .val('New value')
+//   .on('input', (e: Event) => {
+//     const value = _(e.target as Element).val() as string;
+//     _('.text').text(`You typed: ${value}`);
+//   });
 
 _('.list')
   .find('li')
@@ -83,3 +83,11 @@ _('.list').on('click', (e: Event) => {
     _target.toggleClass('selected');
   }
 });
+
+const count = new Ref(0);
+const computed = new ComputedRef(count, () => count.get() * 2);
+
+count.track(() => _(".count").text(count.get() as unknown as string));
+computed.track(() => _(".computed").text(computed.get() as unknown as string));
+
+setInterval(() => count.set(count.get() + 1), 1000);
