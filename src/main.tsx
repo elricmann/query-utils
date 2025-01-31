@@ -7,9 +7,9 @@ _('#app')
   .css('background-color', 'lightgray')
   .css('padding', '20px');
 
-_('h1')
-  .text('Updated Title')
-  .css('color', 'blue');
+// _('h1')
+//   .text('Updated Title')
+//   .css('color', 'blue');
 
 _('.text').html('This is <strong>bold</strong> text');
 

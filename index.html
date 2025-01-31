@@ -7,6 +7,14 @@
     <title>Tests (query-utils)</title>
   </head>
   <body>
+    <!-- import the routes partial -->
+    <q-import src="/routes.html"></q-import>
+    <section>
+      <q-link href="/">Home</q-link>
+      <q-link href="/about">About</q-link>
+      <q-link href="/contact">Contact</q-link>
+    </section>
+
     <div class="container" style="background-color: #fff">
       <div class="app">Text</div>
       <h1>Hello, World!</h1>
@@ -33,7 +41,6 @@
         <div>Computed ref: <strong class="computed"></strong></div>
       </section>
       <q-sidebar></q-sidebar>
-      <q-import src="/partial.html"></q-import>
     </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
